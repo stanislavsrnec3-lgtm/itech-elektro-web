@@ -3,25 +3,25 @@ const galleryItems = [
     label: "Rekonstrukce bytu",
     title: "Kompletní rekonstrukce bytu",
     text: "Nové rozvody, rozvaděč, zásuvkové a světelné okruhy i přípravy pro kuchyň a koupelnu.",
-    image: ""
+    image: "assets/gallery/rekonstrukce-bytu-01.jpeg"
   },
   {
     label: "Rodinný dům",
     title: "Rodinný dům na klíč",
     text: "Kompletní elektroinstalace včetně rozvaděče, osvětlení, zásuvek a příprav pro další technologie.",
-    image: ""
+    image: "assets/gallery/rodinny-dum-01.jpg"
   },
   {
     label: "Loxone",
     title: "Loxone a chytré ovládání",
     text: "Řízení osvětlení, topení, stínění nebo přístupu pro pohodlnější a úspornější provoz domácnosti.",
-    image: ""
+    image: "assets/gallery/loxone-01.jpg"
   },
   {
     label: "Preciznost",
     title: "Precizní technické provedení",
     text: "Důraz na detail, přehledné rozvaděče, čisté trasy kabeláže a poctivě dotažená práce.",
-    image: ""
+    image: "assets/gallery/detail-rozvadec-01.jpg"
   }
 ];
 
