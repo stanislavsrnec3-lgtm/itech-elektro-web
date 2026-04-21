@@ -58,11 +58,10 @@
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow">iTECH elektro | Brno a okolí</p>
-          <h1>Elektroinstalace pro novostavby, rekonstrukce i chytré domy.</h1>
+          <h1>Elektroinstalace pro novostavby i rekonstrukce.</h1>
           <p class="hero-text">
-            Provádíme elektroinstalace pro byty, rodinné domy a další objekty v Brně a okolí.
-            Řešíme klasické rozvody, Loxone, chytré elektroinstalace, kamerové systémy, zabezpečení i revize.
-            Pracujeme pečlivě, věcně a tak, aby řešení dávalo smysl technicky, provozně i finančně.
+            Provádíme elektroinstalace pro byty, rodinné domy i další objekty v Brně a okolí.
+            Řešíme chytré elektroinstalace, Loxone, kamerové systémy, zabezpečení a revize.
           </p>
 
           <div class="hero-actions">
@@ -386,9 +385,10 @@
           </div>
         </div>
 
-        <form id="contact-form" class="contact-form">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/xgornoor" method="POST" enctype="multipart/form-data">
           <h3>Nezávazná poptávka</h3>
           <p class="form-intro">Napište nám základní informace k zakázce. Na poptávky obvykle reagujeme rychle, nejrychlejší je telefon.</p>
+          <input type="hidden" name="_subject" value="Poptávka z webu iTECH elektro">
 
           <label>
             Jméno
@@ -453,12 +453,12 @@
           <label>
             Fotky nebo podklady (volitelné)
             <input type="file" name="attachments" accept="image/*,.pdf" multiple>
-            <span class="field-note">Přílohy se přes e-mail nepřipojí automaticky. Po otevření e-mailu je prosím přiložte ručně.</span>
+            <span class="field-note">Můžete přiložit fotky nebo PDF podklady, pokud je máte připravené.</span>
           </label>
 
-          <button class="button button-primary" type="submit">Připravit e-mail s poptávkou</button>
-          <p class="form-note">Po kliknutí se otevře váš e-mailový program s předvyplněnou zprávou.</p>
-          <p id="form-feedback" class="form-feedback" aria-live="polite"></p>
+          <button class="button button-primary" type="submit">Odeslat poptávku</button>
+          <p class="form-note">Po odeslání se zpráva bezpečně odešle přímo z webu.</p>
+          <p id="form-feedback" class="form-feedback" aria-live="polite" role="status"></p>
         </form>
       </div>
     </section>

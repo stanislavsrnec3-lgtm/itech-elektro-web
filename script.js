@@ -190,30 +190,59 @@ const contactForm = document.querySelector("#contact-form");
 const feedback = document.querySelector("#form-feedback");
 
 if (contactForm && feedback) {
-  contactForm.addEventListener("submit", (event) => {
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const defaultSubmitText = submitButton ? submitButton.textContent : "";
+
+  function setFormFeedback(message, state) {
+    feedback.textContent = message;
+    feedback.classList.remove("is-success", "is-error");
+
+    if (state) {
+      feedback.classList.add(`is-${state}`);
+    }
+  }
+
+  contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const formData = new FormData(contactForm);
-    const name = formData.get("name");
-    const phone = formData.get("phone");
-    const email = formData.get("email");
-    const location = formData.get("location");
-    const objectType = formData.get("objectType");
-    const inquiryType = formData.get("inquiryType");
-    const message = formData.get("message");
-    const preferredDate = formData.get("preferredDate");
-    const attachments = formData.getAll("attachments").filter((file) => file && file.name);
-    const attachmentList = attachments.length
-      ? attachments.map((file) => file.name).join(", ")
-      : "bez příloh";
+    const formAction = contactForm.getAttribute("action");
 
-    const subject = encodeURIComponent(`Poptávka z webu iTECH elektro - ${inquiryType}`);
-    const body = encodeURIComponent(
-      `Jméno: ${name}\nTelefon: ${phone}\nE-mail: ${email}\nLokalita: ${location}\nTyp objektu: ${objectType}\nTyp poptávky: ${inquiryType}\nPreferovaný termín: ${preferredDate || "neuvedeno"}\nPřílohy k doplnění: ${attachmentList}\n\nStručný popis zakázky:\n${message}`
-    );
+    if (!formAction) {
+      setFormFeedback("Formulář teď nemá nastavené místo pro odeslání. Zavolejte nám prosím.", "error");
+      return;
+    }
 
-    feedback.textContent = "Otevírá se váš e-mailový program s předvyplněnou poptávkou.";
-    window.location.href = `mailto:stanislavsrnec@itechelektro.cz?subject=${subject}&body=${body}`;
+    setFormFeedback("Odesíláme poptávku...", "");
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Odesíláme...";
+    }
+
+    try {
+      const response = await fetch(formAction, {
+        method: contactForm.method || "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Formspree request failed");
+      }
+
+      contactForm.reset();
+      setFormFeedback("Děkujeme, poptávka byla úspěšně odeslána. Ozveme se vám co nejdříve.", "success");
+    } catch (error) {
+      setFormFeedback("Poptávku se nepodařilo odeslat. Zkuste to prosím znovu, případně nám zavolejte.", "error");
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultSubmitText;
+      }
+    }
   });
 }
 

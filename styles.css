@@ -220,10 +220,11 @@ button {
 
 .hero-copy h1 {
   margin: 0 0 1rem;
-  font-size: clamp(2.65rem, 5.5vw, 4.45rem);
-  line-height: 1.14;
-  letter-spacing: -0.05em;
-  max-width: 9.5ch;
+  font-size: 2.15rem;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0;
+  max-width: 10.25em;
   text-wrap: balance;
 }
 
@@ -280,8 +281,9 @@ button {
 }
 
 .hero-text {
-  max-width: 34rem;
-  font-size: 1.04rem;
+  max-width: 35rem;
+  font-size: 1.03rem;
+  text-wrap: pretty;
 }
 
 .section-heading h3 {
@@ -758,6 +760,21 @@ button {
 
 .form-feedback {
   min-height: 1.5rem;
+  font-weight: 600;
+}
+
+.form-feedback.is-success {
+  color: #167044;
+}
+
+.form-feedback.is-error {
+  color: var(--brand-dark);
+}
+
+.contact-form .button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
 }
 
 .site-footer {
@@ -827,6 +844,14 @@ button {
     padding: 4rem 0;
   }
 
+  .hero-copy h1 {
+    font-size: 3.35rem;
+  }
+
+  .hero-text {
+    font-size: 1.06rem;
+  }
+
   .trust-grid,
   .gallery-grid,
   .contact-cards {
@@ -840,6 +865,11 @@ button {
 }
 
 @media (max-width: 520px) {
+  .hero-copy h1 {
+    font-size: 2.05rem;
+    max-width: 10.5em;
+  }
+
   .review-brand {
     margin-bottom: 1rem;
   }
@@ -889,6 +919,11 @@ button {
     align-items: center;
     gap: 3rem;
     padding-top: 1rem;
+  }
+
+  .hero-copy h1 {
+    font-size: 3.75rem;
+    max-width: 10.15em;
   }
 
   .hero-panel,
