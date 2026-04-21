@@ -227,6 +227,10 @@ button {
   text-wrap: balance;
 }
 
+.service-page .hero-copy h1 {
+  max-width: 12ch;
+}
+
 .hero-text,
 .section-heading p,
 .section-copy p,
@@ -236,6 +240,8 @@ button {
 .feature-card p,
 .contact-copy p,
 .form-note,
+.form-intro,
+.field-note,
 .footer-bottom,
 .site-footer p,
 .site-footer a,
@@ -312,6 +318,17 @@ button {
   width: 100%;
 }
 
+.breadcrumb-link {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.breadcrumb-link:hover {
+  color: var(--brand);
+}
+
 .hero-points,
 .card-list,
 .feature-list,
@@ -335,6 +352,7 @@ button {
 .audience-card,
 .feature-card,
 .stat-card,
+.cta-panel,
 .tender-card,
 .document-card,
 .contact-form,
@@ -351,6 +369,7 @@ button {
 .visual-card,
 .audience-card,
 .feature-card,
+.cta-panel,
 .tender-card,
 .document-card,
 .contact-form,
@@ -369,6 +388,18 @@ button {
 .review-card {
   min-height: clamp(320px, 34vw, 390px);
   text-align: center;
+}
+
+.service-summary-card h2,
+.cta-panel h2 {
+  margin: 0 0 0.85rem;
+  font-family: "Sora", sans-serif;
+}
+
+.service-summary-card p:last-child,
+.cta-panel > p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.7;
 }
 
 .review-brand {
@@ -394,6 +425,35 @@ button {
   justify-content: center;
   gap: 0.55rem;
   margin: 1rem 0 1.25rem;
+}
+
+.review-proof {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 1.15rem;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.review-proof li {
+  padding: 0.8rem;
+  border-radius: 18px;
+  background: rgba(16, 18, 23, 0.04);
+}
+
+.review-proof strong {
+  display: block;
+  font-family: "Sora", sans-serif;
+  font-size: 0.94rem;
+}
+
+.review-proof span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
 }
 
 .review-highlights span,
@@ -478,9 +538,30 @@ button {
   padding-bottom: 3.25rem;
 }
 
+.trust-strip-early {
+  padding-bottom: 1rem;
+}
+
+.trust-strip-early .section-heading {
+  max-width: 860px;
+}
+
 .trust-card {
   display: grid;
   gap: 0.55rem;
+}
+
+.faq-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.cta-panel {
+  max-width: 860px;
+  margin: 0 auto;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 246, 246, 0.96)),
+    var(--surface);
 }
 
 .trust-number {
@@ -638,6 +719,10 @@ button {
   gap: 0.95rem;
 }
 
+.form-intro {
+  margin: -0.2rem 0 0.25rem;
+}
+
 .contact-form label {
   display: grid;
   gap: 0.4rem;
@@ -664,6 +749,11 @@ button {
 .form-note,
 .form-feedback {
   margin: 0;
+}
+
+.field-note {
+  font-size: 0.88rem;
+  font-weight: 400;
 }
 
 .form-feedback {
@@ -836,4 +926,8 @@ button {
   .site-footer {
     padding-bottom: 3rem;
   }
+}
+
+.trust-strip-early .trust-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }

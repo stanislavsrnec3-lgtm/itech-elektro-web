@@ -195,17 +195,24 @@ if (contactForm && feedback) {
 
     const formData = new FormData(contactForm);
     const name = formData.get("name");
-    const email = formData.get("email");
     const phone = formData.get("phone");
-    const segment = formData.get("segment");
+    const email = formData.get("email");
+    const location = formData.get("location");
+    const objectType = formData.get("objectType");
+    const inquiryType = formData.get("inquiryType");
     const message = formData.get("message");
+    const preferredDate = formData.get("preferredDate");
+    const attachments = formData.getAll("attachments").filter((file) => file && file.name);
+    const attachmentList = attachments.length
+      ? attachments.map((file) => file.name).join(", ")
+      : "bez příloh";
 
-    const subject = encodeURIComponent(`Poptávka z webu iTECH elektro - ${segment}`);
+    const subject = encodeURIComponent(`Poptávka z webu iTECH elektro - ${inquiryType}`);
     const body = encodeURIComponent(
-      `Jméno: ${name}\nE-mail: ${email}\nTelefon: ${phone}\nTyp poptávky: ${segment}\n\nPopis:\n${message}`
+      `Jméno: ${name}\nTelefon: ${phone}\nE-mail: ${email}\nLokalita: ${location}\nTyp objektu: ${objectType}\nTyp poptávky: ${inquiryType}\nPreferovaný termín: ${preferredDate || "neuvedeno"}\nPřílohy k doplnění: ${attachmentList}\n\nStručný popis zakázky:\n${message}`
     );
 
-    feedback.textContent = "Otevírá se váš e-mailový program s předvyplněnou zprávou.";
+    feedback.textContent = "Otevírá se váš e-mailový program s předvyplněnou poptávkou.";
     window.location.href = `mailto:stanislavsrnec@itechelektro.cz?subject=${subject}&body=${body}`;
   });
 }
