@@ -61,6 +61,12 @@ a {
   text-decoration: none;
 }
 
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 button,
 input,
 select,
@@ -753,6 +759,10 @@ button {
   margin: 0;
 }
 
+.privacy-note {
+  font-size: 0.9rem;
+}
+
 .field-note {
   font-size: 0.88rem;
   font-weight: 400;
@@ -861,6 +871,12 @@ button {
   .feature-grid,
   .stats-row {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .phone-pill {
+    display: none;
   }
 }
 

@@ -34,28 +34,28 @@ const documentItems = [
     type: "Oprávnění",
     title: "TIČR",
     text: "Platné oprávnění k činnosti v oblasti elektro.",
-    href: "",
+    href: null,
     ctaLabel: "Zobrazit PDF"
   },
   {
     type: "Školení",
     title: "Odborná školení a certifikace",
     text: "Školení k technologiím, vyhláškám a vybraným specializovaným systémům.",
-    href: "",
+    href: null,
     ctaLabel: "Zobrazit PDF"
   },
   {
     type: "Pojištění",
     title: "Pojištění odpovědnosti",
     text: "Potvrzení o pojištění odpovědnosti za výkon činnosti.",
-    href: "",
+    href: null,
     ctaLabel: "Stáhnout PDF"
   },
   {
     type: "Kvalifikace",
     title: "Výpis z SKD",
     text: "Doklad o zápisu v Seznamu kvalifikovaných dodavatelů.",
-    href: "",
+    href: null,
     ctaLabel: "Zobrazit PDF"
   }
 ];
@@ -86,6 +86,8 @@ function createGalleryCard(item) {
     image.className = "gallery-image";
     image.src = item.image;
     image.alt = item.title;
+    image.loading = "lazy";
+    image.decoding = "async";
     article.append(image);
   } else {
     const visual = document.createElement("div");
