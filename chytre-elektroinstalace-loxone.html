@@ -18,52 +18,50 @@
   <meta name="twitter:title" content="Chytré elektroinstalace Loxone Brno | iTECH elektro">
   <meta name="twitter:description" content="Chytré elektroinstalace Loxone v Brně a okolí pro domy a byty.">
   <meta name="twitter:image" content="https://itechelektro.cz/assets/images/logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Chytré elektroinstalace Loxone",
-      "provider": {
-        "@type": "Electrician",
-        "name": "iTECH elektro",
-        "url": "https://itechelektro.cz/"
-      },
-      "areaServed": "Brno a okolí",
-      "serviceType": "Chytré elektroinstalace Loxone"
-    }
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Chytré elektroinstalace Loxone",
+  "provider": {
+    "@type": "Electrician",
+    "name": "iTECH elektro",
+    "url": "https://itechelektro.cz/",
+    "@id": "https://itechelektro.cz/#firma",
+    "telephone": "+420721904248"
+  },
+  "areaServed": "Brno a nejbližší okolí",
+  "serviceType": "Chytré elektroinstalace Loxone",
+  "@id": "https://itechelektro.cz/chytre-elektroinstalace-loxone.html#sluzba",
+  "url": "https://itechelektro.cz/chytre-elektroinstalace-loxone.html"
+}
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Přejít k obsahu</a>
   <header class="site-header">
     <div class="container topbar">
-      <a class="brand" href="index.html#home" aria-label="iTECH elektro">
-        <img src="assets/images/logo.png" alt="Logo iTECH elektro">
+      <a class="brand" href="index.html#home" aria-label="iTECH elektro, úvodní stránka">
+        <img src="assets/images/logo.png" alt="iTECH elektro" width="1069" height="320">
       </a>
-
+      <nav id="main-nav" class="main-nav" aria-label="Hlavní navigace">
+        <a href="index.html#rozcestnik">Služby</a>
+        <a href="index.html#realizace">Realizace a recenze</a>
+        <a href="index.html#o-firme">O firmě</a>
+        <a href="index.html?inquiryType=Loxone#kontakt">Kontakt</a>
+      </nav>
       <div class="header-actions">
-        <a class="phone-pill" href="tel:+420721904248">+420 721 904 248</a>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
-          Menu
+        <a class="button button-primary header-quote" href="index.html?inquiryType=Loxone#kontakt">Nezávazně nacenit</a>
+        <button class="menu-toggle" type="button" aria-label="Otevřít nabídku" title="Otevřít nabídku" aria-expanded="false" aria-controls="main-nav">
+          <img src="assets/icons/menu.svg" alt="" width="24" height="24">
         </button>
       </div>
-
-      <nav id="main-nav" class="main-nav" aria-label="Hlavní navigace">
-        <a href="index.html#home">Domů</a>
-        <a href="index.html#rozcestnik">Služby</a>
-        <a href="index.html#domacnosti">Domácnosti</a>
-        <a href="index.html#verejna-sprava">Města a úřady</a>
-        <a href="index.html#stavebni-firmy">Stavební firmy</a>
-        <a href="index.html#dokumenty">Dokumenty</a>
-        <a href="index.html#kontakt">Kontakt</a>
-      </nav>
     </div>
   </header>
 
-  <main class="service-page">
+  <main id="main-content" class="service-page" tabindex="-1">
     <section class="hero-section service-hero">
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -77,8 +75,8 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="tel:+420721904248">Probrat řešení Loxone</a>
-            <a class="button button-secondary" href="index.html#kontakt">Poslat poptávku</a>
+            <a class="button button-secondary" href="tel:+420721904248">Probrat řešení Loxone</a>
+            <a class="button button-primary" href="index.html?inquiryType=Loxone#kontakt">Nezávazně nacenit</a>
           </div>
 
           <ul class="hero-points">
@@ -99,6 +97,13 @@
             </p>
           </article>
         </aside>
+      </div>
+    </section>
+
+    <section class="content-section alt-section">
+      <div class="container content-grid">
+        <div class="section-copy"><p class="eyebrow">Loxone pro firmy</p><h2>Řešíte energie a provoz firemní budovy?</h2><p>Vedle chytrých domácností dodáváme energetický management pro firmy: měření spotřeby, řízení technologií a návaznosti na další zařízení podle konkrétního projektu.</p></div>
+        <div><a class="button button-primary" href="energeticky-management-loxone.html">Energetický management firem</a><p class="small-note">Samostatná nabídka pro firemní objekty v Brně a nejbližším okolí.</p></div>
       </div>
     </section>
 
@@ -254,8 +259,8 @@
             a technologie, které chcete propojit. Navrhneme systém Loxone tak, aby byl praktický pro běžné používání.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="tel:+420721904248">Zavolat +420 721 904 248</a>
-            <a class="button button-secondary" href="index.html#kontakt">Poslat poptávku</a>
+            <a class="button button-secondary" href="tel:+420721904248">Zavolat +420 721 904 248</a>
+            <a class="button button-primary" href="index.html?inquiryType=Loxone#kontakt">Nezávazně nacenit</a>
           </div>
         </div>
       </div>
@@ -265,42 +270,47 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <img class="footer-logo" src="assets/images/logo.png" alt="iTECH elektro">
-        <p>Provádíme elektroinstalace, Loxone a související práce především v Brně a okolí.</p>
+        <a class="footer-brand" href="index.html#home">iTECH <span>elektro</span></a>
+        <p>Stanislav Srnec<br>Elektroinstalace a technologie budov.<br>Brno a nejbližší okolí.</p>
+        <a class="text-link" href="https://www.nejremeslnici.cz/profil/72179-stanislav-srnec-itech-elektro" target="_blank" rel="noopener noreferrer">Reference na NejŘemeslníci.cz</a>
       </div>
-
       <div>
-        <h3>Služby</h3>
+        <h3>Elektroinstalace</h3>
         <ul>
-          <li><a href="elektroinstalace-bytu.html">Elektroinstalace bytů</a></li>
-          <li><a href="elektroinstalace-rodinnych-domu.html">Elektroinstalace rodinných domů</a></li>
+          <li><a href="elektroinstalace-bytu.html">Byty a rekonstrukce</a></li>
+          <li><a href="elektroinstalace-rodinnych-domu.html">Rodinné domy</a></li>
           <li><a href="elektroinstalace-novostavby-rekonstrukce.html">Novostavby a rekonstrukce</a></li>
-          <li><a href="chytre-elektroinstalace-loxone.html">Chytré elektroinstalace Loxone</a></li>
-          <li><a href="kamerove-systemy-zabezpeceni.html">Kamery a zabezpečení</a></li>
-          <li><a href="revize-porevizni-opravy.html">Revize a porevizní opravy</a></li>
-          <li><a href="bytove-domy-svj-bytova-druzstva.html">Bytové domy, SVJ a družstva</a></li>
-          <li><a href="spoluprace-stavebni-firmy.html">Stavební firmy</a></li>
+          <li><a href="revize-porevizni-opravy.html">Revize a opravy</a></li>
+          <li><a href="bytove-domy-svj-bytova-druzstva.html">Bytové domy a SVJ</a></li>
+          <li><a href="spoluprace-stavebni-firmy.html">Pro stavební firmy</a></li>
         </ul>
       </div>
-
       <div>
-        <h3>Kontakt</h3>
+        <h3>Technologie</h3>
+        <ul>
+          <li><a href="hvi-hromosvody.html">Izolované hromosvody DEHN</a></li>
+          <li><a href="kamerove-systemy-zabezpeceni.html">Alarmy, kamery a zvonky</a></li>
+          <li><a href="datove-wifi-site-brno.html">Datové a Wi-Fi sítě</a></li>
+          <li><a href="chytre-elektroinstalace-loxone.html">Chytré domácnosti Loxone</a></li>
+          <li><a href="energeticky-management-loxone.html">Energetický management firem</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ozvěte se</h3>
         <ul>
           <li><a href="tel:+420721904248">+420 721 904 248</a></li>
           <li><a href="mailto:stanislavsrnec@itechelektro.cz">stanislavsrnec@itechelektro.cz</a></li>
-          <li><a href="index.html#kontakt">Působnost: Brno a okolí</a></li>
+          <li><a href="index.html?inquiryType=Loxone#kontakt">Nezávazná poptávka</a></li>
+          <li><a href="index.html#dokumenty">Oprávnění a dokumenty</a></li>
         </ul>
       </div>
     </div>
-
-    <p class="footer-bottom">© <span id="current-year"></span> iTECH elektro</p>
+    <div class="container footer-bottom"><span>© <span id="current-year">2026</span> iTECH elektro</span><a href="index.html#soukromi">Údaje v poptávce</a></div>
   </footer>
-
   <div class="mobile-cta" aria-label="Rychlý kontakt">
-    <a class="mobile-cta-call" href="tel:+420721904248">Zavolat</a>
-    <a class="mobile-cta-form" href="index.html#kontakt">Poptávka</a>
+    <a class="mobile-cta-call" href="tel:+420721904248"><img src="assets/icons/phone.svg" width="20" height="20" alt="">Zavolat</a>
+    <a class="mobile-cta-form" href="index.html?inquiryType=Loxone#kontakt">Nezávazně nacenit<img src="assets/icons/arrow-right.svg" width="20" height="20" alt=""></a>
   </div>
-
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

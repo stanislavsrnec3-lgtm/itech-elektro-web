@@ -2,56 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://itechelektro.cz/</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/elektroinstalace-bytu.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/elektroinstalace-rodinnych-domu.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/elektroinstalace-novostavby-rekonstrukce.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/chytre-elektroinstalace-loxone.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://itechelektro.cz/kamerove-systemy-zabezpeceni.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/revize-porevizni-opravy.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/bytove-domy-svj-bytova-druzstva.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-09-14</lastmod>
   </url>
   <url>
     <loc>https://itechelektro.cz/spoluprace-stavebni-firmy.html</loc>
-    <lastmod>2026-04-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://itechelektro.cz/hvi-hromosvody.html</loc>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://itechelektro.cz/datove-wifi-site-brno.html</loc>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://itechelektro.cz/energeticky-management-loxone.html</loc>
+    <lastmod>2026-09-14</lastmod>
+  </url>
+  <url>
+    <loc>https://itechelektro.cz/kamerove-systemy-zabezpeceni.html</loc>
+    <lastmod>2026-09-14</lastmod>
   </url>
 </urlset>
