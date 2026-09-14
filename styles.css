@@ -118,9 +118,8 @@ details[open] summary { color: var(--brand); }
 .contact-method { margin: 0; padding: 0; border: 0; min-width: 0; }
 .contact-method legend { padding: 0; margin-bottom: 10px; font-size: 14px; font-weight: 600; }
 .form-attachments { border-block: 1px solid var(--line); padding: 2px 0; }
-.form-attachments label { margin: 10px 0; }
-.contact-form input[type="file"] { font-size: 14px; padding: 8px; }
-.contact-form input[type="file"]::file-selector-button { border: 0; background: var(--bg); color: var(--text); padding: 8px 12px; margin-right: 10px; border-radius: 4px; cursor: pointer; }
+.attachment-email { min-height: 44px; font-size: 14px; }
+.attachment-address { overflow-wrap: anywhere; }
 .form-feedback { margin: 0; padding: 0; }
 .form-feedback:empty { display: none; }
 .form-feedback:not(:empty) { padding: 14px 16px; background: var(--bg); border-left: 3px solid #727a7e; }

@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="Elektroinstalace, zabezpečení Jablotron, kamery Hikvision, Wi-Fi, Loxone a hromosvody DEHN v Brně a okolí. Kompletní řešení i jednotlivé služby.">
   <meta name="twitter:image" content="https://itechelektro.cz/assets/images/logo.png">
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260914-form">
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Electrician",
@@ -155,7 +155,7 @@
           <address class="contact-details"><a class="contact-phone" href="tel:+420721904248">+420 721 904 248</a><a href="mailto:stanislavsrnec@itechelektro.cz">stanislavsrnec@itechelektro.cz</a><span>Stanislav Srnec · iTECH elektro<br>Brno a nejbližší okolí</span></address>
           <p class="small-note">Projekt nebo výkaz výměr můžete poslat také přímo e-mailem.</p>
         </div>
-        <form id="contact-form" class="contact-form" action="https://formspree.io/f/xgornoor" method="POST" enctype="multipart/form-data">
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/xgornoor" method="POST">
           <input type="hidden" name="_subject" value="Poptávka z webu iTECH elektro">
           <div class="honeypot" aria-hidden="true"><label>Vyplňte pouze, pokud jste robot<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
           <label for="message">Co potřebujete?<textarea id="message" name="message" rows="4" maxlength="10000" required placeholder="Např. elektroinstalaci při rekonstrukci, zabezpečení domu nebo Wi-Fi v kancelářích."></textarea></label>
@@ -185,10 +185,10 @@
             </select>
           </label>
           <details class="form-attachments">
-            <summary>Přidat fotky nebo projekt <span class="optional">(volitelné)</span></summary>
-            <label for="attachments">Přílohy<input id="attachments" type="file" name="attachments" accept=".jpg,.jpeg,.png,.webp,.heic,.heif,.pdf" multiple aria-describedby="attachment-note attachment-error"></label>
-            <p id="attachment-note" class="field-note">Až 5 souborů, celkem nejvýše 20 MB. Fotografie nebo PDF. Větší podklady pošlete e-mailem.</p>
-            <p id="attachment-error" class="field-error" hidden></p>
+            <summary>Fotky nebo projekt <span class="optional">(volitelné)</span></summary>
+            <p class="field-note">Podklady nám pošlete e-mailem. Uveďte stejný kontakt a lokalitu jako v poptávce, ať je snadno přiřadíme.</p>
+            <a class="text-link attachment-email" href="mailto:stanislavsrnec@itechelektro.cz?subject=Podklady%20k%20popt%C3%A1vce%20z%20webu">Poslat podklady e-mailem<img class="icon" src="assets/icons/arrow-up-right.svg" width="20" height="20" alt=""></a>
+            <p class="field-note attachment-address">stanislavsrnec@itechelektro.cz</p>
           </details>
           <button class="button button-primary" type="submit">Odeslat nezávaznou poptávku<img class="icon icon-invert" src="assets/icons/arrow-right.svg" width="20" height="20" alt=""></button>
           <p class="form-note">Odesláním si neobjednáváte placené práce.</p>
@@ -247,6 +247,6 @@
     <a class="mobile-cta-call" href="tel:+420721904248"><img src="assets/icons/phone.svg" width="20" height="20" alt="">Zavolat</a>
     <a class="mobile-cta-form" href="index.html#kontakt">Nezávazně nacenit<img src="assets/icons/arrow-right.svg" width="20" height="20" alt=""></a>
   </div>
-  <script src="script.js" defer></script>
+  <script src="script.js?v=20260914-form" defer></script>
 </body>
 </html>

@@ -87,9 +87,7 @@ if (contactForm && feedback) {
   const phone = contactForm.elements.phone;
   const message = contactForm.elements.message;
   const location = contactForm.elements.location;
-  const attachments = contactForm.elements.attachments;
   const contactError = document.querySelector("#contact-error");
-  const attachmentError = document.querySelector("#attachment-error");
   const submitButton = contactForm.querySelector('button[type="submit"]');
   const submitLabel = submitButton.innerHTML;
   const mobileCta = document.querySelector(".mobile-cta");
@@ -109,23 +107,19 @@ if (contactForm && feedback) {
   [email, phone].forEach((input) => input.addEventListener("input", clearContactError));
   [message, location].forEach((input) => input.addEventListener("input", () => input.setCustomValidity("")));
 
-  function validateFiles() {
-    const files = Array.from(attachments.files);
-    let error = "";
-    if (files.length > 5) error = "Přiložte nejvýše 5 souborů.";
-    else if (files.reduce((total, file) => total + file.size, 0) > 20 * 1024 * 1024) error = "Přílohy mají dohromady více než 20 MB. Pošlete je prosím e-mailem.";
-    else if (files.some((file) => !/\.(jpe?g|png|webp|heic|heif|pdf)$/i.test(file.name))) error = "Přiložte fotografie ve formátu JPG, PNG, WebP, HEIC nebo PDF.";
-    else if (files.some((file) => file.size === 0)) error = "Některý soubor je prázdný. Odeberte jej nebo vyberte jiný.";
-    attachmentError.textContent = error;
-    attachmentError.hidden = !error;
-    attachments.setCustomValidity(error);
-    if (error) {
-      attachments.setAttribute("aria-invalid", "true");
-      attachments.closest("details").open = true;
-    } else attachments.removeAttribute("aria-invalid");
-    return !error;
+  async function rejectionReason(response) {
+    if (response.status === 429) return "limit";
+    if (response.status === 413) return "size";
+    let payload;
+    try { payload = await response.json(); } catch { return "response"; }
+    const errors = Array.isArray(payload?.errors)
+      ? payload.errors.filter((error) => error && typeof error === "object")
+      : [];
+    if (errors.some((error) => error.code === "NO_FILE_UPLOADS" || error.message === "File Uploads Not Permitted") || payload?.error === "File Uploads Not Permitted") return "uploads";
+    if (errors.some((error) => error.code === "TYPE_EMAIL" || (error.field === "email" && ["REQUIRED_FIELD_MISSING", "REQUIRED_FIELD_EMPTY"].includes(error.code)))) return "email";
+    if (errors.some((error) => ["INACTIVE", "BLOCKED", "FORM_NOT_FOUND", "PROJECT_NOT_FOUND"].includes(error.code))) return "unavailable";
+    return "response";
   }
-  attachments.addEventListener("change", validateFiles);
 
   function setFeedback(text, state) {
     feedback.textContent = text;
@@ -155,12 +149,11 @@ if (contactForm && feedback) {
     }
     if (!message.value.trim()) message.setCustomValidity("Napište prosím, co potřebujete.");
     if (!location.value.trim()) location.setCustomValidity("Napište prosím lokalitu zakázky.");
-    validateFiles();
     if (!contactForm.reportValidity()) return;
 
     const formData = new FormData(contactForm);
-    // Do not send an empty file part or an empty reply-to address to Formspree.
-    if (!attachments.files.length) formData.delete("attachments");
+    // Never silently discard files from an older cached version of the form.
+    if (!contactForm.elements.attachments?.files.length) formData.delete("attachments");
     if (!email.value) formData.delete("email");
     formData.set("_subject", "Poptávka iTECH elektro" + (inquirySelect.value ? ": " + inquirySelect.value : ""));
     const service = inquirySelect.value;
@@ -180,20 +173,23 @@ if (contactForm && feedback) {
         signal: controller.signal
       });
       if (!response.ok) {
-        if (response.status === 429) throw new Error("limit");
-        if (attachments.files.length && [400, 413, 422].includes(response.status)) throw new Error("files");
-        throw new Error("response");
+        throw new Error(await rejectionReason(response));
       }
       contactForm.reset();
       if (requestedInquiryType) inquirySelect.value = service;
       setFeedback("Děkujeme, poptávka byla odeslána. Ozveme se vám na uvedený kontakt.", "success");
       contactForm.dispatchEvent(new CustomEvent("itech:inquiry-sent", { bubbles: true, detail: { service } }));
     } catch (error) {
-      const text = error.message === "limit"
-        ? "Formulář teď nepřijímá další zprávy. Napište nám prosím na stanislavsrnec@itechelektro.cz nebo zavolejte. Vyplněné údaje zůstaly zachované."
-        : error.message === "files"
-          ? "Služba nepřijala poptávku s přílohami. Podklady můžete poslat na stanislavsrnec@itechelektro.cz, nebo odebrat přílohy a odeslat poptávku znovu. Údaje zůstaly zachované."
-          : "Nemáme potvrzení o odeslání. Vaše údaje zůstaly ve formuláři. Kontaktujte nás na stanislavsrnec@itechelektro.cz nebo +420 721 904 248; poptávku můžete také zkusit odeslat znovu.";
+      const errorMessages = {
+        limit: "Formulář teď nepřijímá další zprávy. Napište nám prosím na stanislavsrnec@itechelektro.cz nebo zavolejte. Vyplněné údaje zůstaly zachované.",
+        uploads: "Tento formulář nepodporuje přílohy. Podklady pošlete na stanislavsrnec@itechelektro.cz. Poptávka nebyla odeslána a údaje zůstaly zachované.",
+        email: "Služba vyžaduje platnou e-mailovou adresu. Doplňte nebo opravte e-mail a odešlete poptávku znovu. Vyplněné údaje zůstaly zachované.",
+        size: "Služba odmítla příliš velkou zprávu. Delší zadání a podklady pošlete na stanislavsrnec@itechelektro.cz. Vyplněné údaje zůstaly zachované.",
+        unavailable: "Formulář je momentálně nedostupný. Napište nám na stanislavsrnec@itechelektro.cz nebo zavolejte na +420 721 904 248. Vyplněné údaje zůstaly zachované."
+      };
+      const text = Object.hasOwn(errorMessages, error.message)
+        ? errorMessages[error.message]
+        : "Nemáme potvrzení o odeslání. Vaše údaje zůstaly ve formuláři. Kontaktujte nás na stanislavsrnec@itechelektro.cz nebo +420 721 904 248; poptávku můžete také zkusit odeslat znovu.";
       setFeedback(text, "error");
     } finally {
       clearTimeout(timeout);

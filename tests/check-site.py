@@ -16,6 +16,7 @@ class Page(HTMLParser):
         self.ids = []
         self.links = []
         self.images = []
+        self.file_inputs = []
         self.labels = []
         self.nav_links = []
         self.realization_links = []
@@ -51,6 +52,8 @@ class Page(HTMLParser):
             self.links.append(attrs['src'])
         if tag == 'img':
             self.images.append(attrs)
+        if tag == 'input' and attrs.get('type') == 'file':
+            self.file_inputs.append(attrs)
         if tag == 'label' and 'for' in attrs:
             self.labels.append(attrs['for'])
         if tag == 'h1':
@@ -119,6 +122,10 @@ for name, page in pages.items():
 
 ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
 home = pages['index.html']
+if home.file_inputs:
+    errors.append('Homepage: this Formspree endpoint does not support file uploads')
+if not any(link.startswith('mailto:stanislavsrnec@itechelektro.cz?subject=Podklady') for link in home.links):
+    errors.append('Homepage: missing email alternative for project files')
 review_url = 'https://www.nejremeslnici.cz/profil/72179-stanislav-srnec-itech-elektro#reviews'
 review_links = [link for link in home.realization_links if link.get('href') == review_url]
 if len(review_links) != 1 or review_links[0].get('target') != '_blank' or not {'noopener', 'noreferrer'}.issubset(review_links[0].get('rel', '').split()):

@@ -21,7 +21,7 @@ function element(value = '') {
 }
 
 function setup({fetchResult, search = ''} = {}) {
-  const inputs = {email: element(), phone: element(), message: element('Poptavka DEHN'), location: element('Brno'), attachments: element(), name: element(), inquiryType: element('HVI hromosvod')};
+  const inputs = {email: element(), phone: element(), message: element('Poptavka DEHN'), location: element('Brno'), name: element(), inquiryType: element('HVI hromosvod')};
   const select = inputs.inquiryType;
   select.options = [{value: 'HVI hromosvod'}, {value: 'Loxone'}];
   const button = element();
@@ -34,11 +34,11 @@ function setup({fetchResult, search = ''} = {}) {
     dispatchEvent(event) { this.sentEvent = event; },
     contains: () => false
   });
-  const feedback = element(), contactError = element(), attachmentError = element();
-  const nodes = {'#contact-form':form,'#form-feedback':feedback,'#inquiryType':select,'#contact-error':contactError,'#attachment-error':attachmentError,'.mobile-cta':element()};
+  const feedback = element(), contactError = element();
+  const nodes = {'#contact-form':form,'#form-feedback':feedback,'#inquiryType':select,'#contact-error':contactError,'.mobile-cta':element()};
   const requests = [];
   class FakeFormData extends Map {
-    constructor() { super(Object.entries(inputs).map(([k,v]) => [k, k === 'attachments' ? v.files : v.value])); }
+    constructor() { super(Object.entries(inputs).map(([k,v]) => [k, v.value])); }
   }
   vm.runInNewContext(source, {
     document: {documentElement:element(), querySelector: s => nodes[s] || null, querySelectorAll: () => [], getElementById: () => null},
@@ -47,7 +47,7 @@ function setup({fetchResult, search = ''} = {}) {
     CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options.detail; } },
     fetch: async (url, options) => { requests.push({url, options}); return fetchResult ? fetchResult() : {ok:true,status:200}; }
   });
-  return {inputs,form,button,feedback,contactError,attachmentError,requests, submit: () => form.listeners.submit({preventDefault(){}})};
+  return {inputs,form,button,feedback,contactError,requests, submit: () => form.listeners.submit({preventDefault(){}})};
 }
 
 test('requires one contact and rejects whitespace-only message', async () => {
@@ -111,27 +111,66 @@ test('network failure preserves values and restores controls', async () => {
   assert.equal(s.feedback.focused, true);
 });
 
-test('valid attachments are kept; invalid counts, sizes and types are blocked', async () => {
-  for (const files of [Array(6).fill({name:'a.pdf',size:1}), [{name:'a.pdf',size:21*1024*1024}], [{name:'a.exe',size:1}], [{name:'a.pdf',size:0}]]) {
-    const s = setup(); s.inputs.email.value = 'test@example.invalid'; s.inputs.attachments.files = files;
+test('recognizes the observed upload rejection and the documented error code', async () => {
+  for (const payload of [
+    {error:'File Uploads Not Permitted',errors:[{message:'File Uploads Not Permitted'}]},
+    {errors:[{code:'NO_FILE_UPLOADS',message:'Uploads disabled'}]}
+  ]) {
+    const s = setup({fetchResult: () => ({ok:false,status:400,json:async () => payload})});
+    s.inputs.email.value = 'test@example.invalid';
     await s.submit();
-    assert.equal(s.requests.length, 0);
-    assert.equal(s.attachmentError.hidden, false);
-    assert.equal(s.inputs.attachments.details.open, true);
+    assert.match(s.feedback.textContent, /nepodporuje přílohy/);
+    assert.equal(s.form.resets, undefined);
+    assert.equal(s.requests.length, 1);
   }
-  const s = setup(); s.inputs.email.value = 'test@example.invalid'; s.inputs.attachments.files = [{name:'projekt.pdf',size:100}];
-  await s.submit();
-  assert.equal(s.requests[0].options.body.get('attachments')[0].name, 'projekt.pdf');
 });
 
 test('server rejection and quota errors preserve the inquiry', async () => {
   for (const status of [422,429,500]) {
     const s = setup({fetchResult: () => ({ok:false,status})});
-    s.inputs.email.value = 'test@example.invalid'; s.inputs.attachments.files = [{name:'projekt.pdf',size:100}];
+    s.inputs.email.value = 'test@example.invalid';
     await s.submit();
     assert.match(s.feedback.className, /error/);
-    assert.equal(s.inputs.attachments.files.length, 1);
+    assert.equal(s.inputs.message.value, 'Poptavka DEHN');
     assert.equal(s.form.resets, undefined);
+  }
+});
+
+test('generic validation failures and malformed responses do not blame attachments', async () => {
+  for (const payload of [null,{}, {errors:[null,'bad response']}, {errors:[{code:'REQUIRED_FIELD_MISSING',field:'location'}]}]) {
+    const s = setup({fetchResult: () => ({ok:false,status:422,json:async () => payload})});
+    s.inputs.email.value = 'test@example.invalid';
+    await s.submit();
+    assert.match(s.feedback.textContent, /Nemáme potvrzení/);
+    assert.doesNotMatch(s.feedback.textContent, /příloh/);
+    assert.equal(s.button.disabled, false);
+  }
+  const s = setup({fetchResult: () => ({ok:false,status:400,json:async () => {throw new SyntaxError('not JSON');}})});
+  s.inputs.email.value = 'test@example.invalid';
+  await s.submit();
+  assert.match(s.feedback.textContent, /Nemáme potvrzení/);
+  assert.equal(s.form.resets, undefined);
+});
+
+test('provider email rules produce an actionable message without erasing the inquiry', async () => {
+  for (const error of [{code:'TYPE_EMAIL',field:'email'}, {code:'REQUIRED_FIELD_MISSING',field:'email'}]) {
+    const s = setup({fetchResult: () => ({ok:false,status:422,json:async () => ({errors:[error]})})});
+    s.inputs.phone.value = '+420 000 000 000';
+    await s.submit();
+    assert.match(s.feedback.textContent, /platnou e-mailovou adresu/);
+    assert.equal(s.inputs.phone.value, '+420 000 000 000');
+    assert.equal(s.form.resets, undefined);
+  }
+});
+
+test('disabled forms and oversized requests have distinct messages', async () => {
+  for (const [status,code,message] of [[403,'INACTIVE',/momentálně nedostupný/],[413,null,/příliš velkou zprávu/],[429,null,/nepřijímá další zprávy/]]) {
+    const s = setup({fetchResult: () => ({ok:false,status,json:async () => ({errors:[{code}]})})});
+    s.inputs.email.value = 'test@example.invalid';
+    await s.submit();
+    assert.match(s.feedback.textContent, message);
+    assert.equal(s.form.resets, undefined);
+    assert.equal(s.button.disabled, false);
   }
 });
 

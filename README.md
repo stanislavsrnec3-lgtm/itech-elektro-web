@@ -28,19 +28,21 @@ Zachovaný endpoint: `https://formspree.io/f/xgornoor`.
 
 - Povinný je popis, lokalita a jeden kontakt. S JavaScriptem stačí e-mail nebo telefon; bez něj je kvůli nativní validaci povinný e-mail.
 - Odkazy z jednotlivých služeb předvolí oblast poptávky.
-- Volitelné přílohy: nejvýše 5 souborů, celkem 20 MB; JPG, PNG, WebP, HEIC/HEIF a PDF.
+- Podklady se posílají samostatně e-mailem. Rozbalovací část formuláře obsahuje odkaz a adresu; nahrávání souborů není nabízeno, protože jej současný endpoint odmítá.
 - Při chybě se obsah nemaže. Odesílání má časový limit a ochranu proti dvojímu kliknutí.
-- Je vynechán prázdný e-mail i prázdná příloha, aby zbytečně nekolidovaly s validací služby.
+- Je vynechán prázdný e-mail a pole příloh. Odpovědi služby se rozlišují podle konkrétních chyb, nikoli podle pouhé přítomnosti souborů.
 - Událost `itech:inquiry-sent` se vyvolá až po úspěšné odpovědi. Obsahuje pouze kategorii služby, nikoli kontakt či text poptávky. Sama nic neposílá do analytiky.
 
-**Před zveřejněním ověřit ve Formspree:** aktivaci endpointu, pravidla požadovaných polí (nyní může přijít pouze telefon), doménová omezení, příjem do správné schránky a tarif s podporou příloh. Místní testy skutečné doručení ani nastavení účtu nepotvrzují.
+**Ověření služby 14. 9. 2026:** jednorázový technický test s veřejným logem vrátil HTTP 400 a `File Uploads Not Permitted`. Navazující označenou textovou poptávku bez přílohy služba přijala (HTTP 200, `ok: true`). To potvrzuje přijetí službou, nikoli doručení do schránky. Do nastavení tarifu nebylo nahlíženo ani zasahováno.
+
+**Před zveřejněním ověřit ve Formspree:** pravidla požadovaných polí (nyní může přijít pouze telefon), doménová omezení a příjem do správné schránky. Nahrávání souborů lze vrátit až po aktivaci podpory příloh a úspěšném testu skutečného doručení. Samotná úprava HTML placenou funkci služby nezapne.
 
 Informace u formuláře popisují účel a použitou službu; nejsou náhradou kompletního právního posouzení. Identifikační a případné další povinné údaje provozovatele je třeba doplnit podle skutečných podkladů. IČO, adresa, retenční lhůty ani certifikace nebyly vymyšleny.
 
 ## Ověření
 
 - `python tests/check-site.py`: všech 12 stránek, interní odkazy a soubory, canonical, jedinečné titulky a popisy, JSON-LD, formulářové popisky, rozměry obrázků, společná navigace, rovnocenné karty služeb, odkaz na recenze a úplnost sitemap.
-- `node --test tests/contact.test.cjs`: osm testů formuláře s lokálně simulovanými odpověďmi. Žádná zpráva ani osobní údaj se neodesílá.
+- `node --test tests/contact.test.cjs`: testy formuláře s lokálně simulovanými odpověďmi včetně skutečně pozorované chyby příloh. Automatické testy neodesílají zprávy ani osobní údaje.
 - Ruční kontrola v prohlížeči: 36 kombinací (12 stránek v šířkách 320, 768 a 1440 px), navíc náhled a formulář v 390 px. Kontrola přetékání, načtených obrázků, menu, Escape, předvolby DEHN, validace a zachování údajů po chybě.
 - Po úpravě priorit služeb znovu ověřena hlavní stránka v šířkách 320, 390, 768 a 1440 px, mobilní navigace a otevření správného profilu NejŘemeslníci.cz. Odkaz u realizací a v úvodu vede přímo na sekci `#reviews`.
 - Syntaktická kontrola JavaScriptu a `git diff --check`.
@@ -52,7 +54,7 @@ Informace u formuláře popisují účel a použitou službu; nejsou náhradou k
 
 Tato úprava sama nic nenahrává na hosting. Publikovat je potřeba HTML, CSS, JavaScript, sitemap, robots a použité soubory assets; adresář tests se nenasazuje.
 
-Po nasazení ověřit přesměrování www na hlavní doménu, dostupnost všech stránek, načtení nových souborů bez staré cache a jednu skutečnou testovací poptávku s přílohou i bez ní. V Search Console a případně Bing Webmaster Tools zkontrolovat sitemap a indexaci nových služeb. Přístup do těchto účtů není součástí ověření.
+Po nasazení ověřit přesměrování www na hlavní doménu, dostupnost všech stránek, načtení nových souborů bez staré cache a jednu skutečnou textovou poptávku z nasazeného webu. Ověřit také odkaz pro zaslání podkladů e-mailem; soubory se přes formulář neposílají. V Search Console a případně Bing Webmaster Tools zkontrolovat sitemap a indexaci nových služeb. Přístup do těchto účtů není součástí ověření.
 
 Pro obchodní výsledky doplnit profily Google/Firmy.cz, skutečné reference DEHN a firemní realizace. Bez doložení nezveřejňovat partnerství s výrobci, certifikace ani procenta úspor. Viditelnost ve vyhledávání a AI nelze zaručit.
 
